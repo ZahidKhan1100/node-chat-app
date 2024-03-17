@@ -1,6 +1,8 @@
 const UserModel = require("../models/UserModel");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET || "default_secret";
+const bcrypt = require("bcryptjs");
+
 
 async function signup(req, res) {
   try {
@@ -30,11 +32,11 @@ async function login(req, res) {
     if (!existEmail) {
       res.status(404).send({ message: "Email not exist" });
     } else {
-      const passwordMatch = await bcrypt.compare(password, emailExist.password);
+      const passwordMatch = await bcrypt.compare(password, existEmail.password);
       if (!passwordMatch) {
         return res.status(401).json({ message: "Incorrect password" });
       } else {
-        const token = jwt.sign({ _id: emailExist._id }, jwtSecret);
+        const token = jwt.sign({ _id: existEmail._id }, jwtSecret);
         return res.status(200).json({ message: "Login successful", token });
       }
     }
