@@ -19,5 +19,7 @@ router.route("/login").post(UserController.login);
 // Friends Controller
 router.route("/add-friend").post(FriendsController.addFriend);
 router.route("/friends-list").get(FriendsController.FriendsList);
+router.route("/accept-request").post(FriendsController.acceptRequest);
+
 
 module.exports = router;
