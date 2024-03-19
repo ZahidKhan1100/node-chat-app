@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET || "default_secret";
+const Joi = require("joi");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -18,6 +19,8 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+
 
 UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
